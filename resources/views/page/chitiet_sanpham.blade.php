@@ -3,7 +3,7 @@
 <div class="inner-header">
     <div class="container">
         <div class="pull-left">
-            <h6 class="inner-title">Product</h6>
+            <h6 class="inner-title">Product {{$sanpham->name}}</h6>
         </div>
         <div class="pull-right">
             <div class="beta-breadcrumb font-large">
@@ -21,13 +21,20 @@
 
                 <div class="row">
                     <div class="col-sm-4">
-                        <img src="./source/assets/dest/images/products/6.jpg" alt="">
+                        <img src="source/image/product/{{$sanpham->image}}" alt="">
                     </div>
                     <div class="col-sm-8">
                         <div class="single-item-body">
-                            <p class="single-item-title">Sample Woman Top</p>
+                            <p class="single-item-title">{{$sanpham->name}}</p>
                             <p class="single-item-price">
-                                <span>$34.55</span>
+                                <span>
+                                    @if($sanpham->promotion_price==0)
+                                    <span class="flash-sale">{{number_format($sanpham->unit_price)}} Đồng</span>
+                                    @else
+                                    <span class="flash-del">{{number_format($sanpham->unit_price)}} Đồng</span>
+                                    <span class="flash-sale">{{number_format($sanpham->promotion_price)}} Đồng</span>
+                                    @endif
+                                </span>
                             </p>
                         </div>
 
@@ -35,7 +42,7 @@
                         <div class="space20">&nbsp;</div>
 
                         <div class="single-item-desc">
-                            <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo ms id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe.</p>
+                            <p>{{$sanpham->description}}</p>
                         </div>
                         <div class="space20">&nbsp;</div>
 
@@ -79,43 +86,81 @@
                     </ul>
 
                     <div class="panel" id="tab-description">
-                        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</p>
-                        <p>Consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequaturuis autem vel eum iure reprehenderit qui in ea voluptate velit es quam nihil molestiae consequr, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? </p>
+                        <p>{{$sanpham->description}}</p>
                     </div>
-                    <div class="panel" id="tab-reviews">
-                        <p>No Reviews</p>
+                    <div class="panel" id="tab-comment">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card-body">
+                                        <form method="post" action="/comment/{{$sanpham->id}}">
+                                            @csrf
+                                            <div class="form-group">
+                                                <textarea class="form-control" name="comment" required style="width: 70%">
+
+                                                </textarea>
+                                            </div>
+                                            <button type="submit" class="beta-btn primary">Bình luận</button>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @if(isset($comments))
+                        @foreach($comments as $comment )
+                        <p class="border-bottom">
+                        <p><b class="pull-left">{{$comment->username}}</b></p><br>
+                        <p>{{$comment->comment}}</p>
+                        </p>
+                        @endforeach
+                        <div class="panel" id="tab-reviews">
+                            <p>No Reviews</p>
+                        </div>
+                        @endif
                     </div>
+
                 </div>
+
                 <div class="space50">&nbsp;</div>
                 <div class="beta-products-list">
                     <h4>Related Products</h4>
 
                     <div class="row">
+                        @foreach($splienquan as $sp)
                         <div class="col-sm-4">
                             <div class="single-item">
                                 <div class="single-item-header">
-                                    <a href="product.html"><img src="./source/assets/dest/images/products/4.jpg" alt=""></a>
+                                    <a href="product.html"><img src="source/image/product/{{$sp->image}}" alt=""></a>
                                 </div>
                                 <div class="single-item-body">
-                                    <p class="single-item-title">Sample Woman Top</p>
+                                    <p class="single-item-title">{{$sp->name}}</p>
                                     <p class="single-item-price">
-                                        <span>$34.55</span>
+                                        <span>
+                                            @if($sanpham->promotion_price==0)
+                                            <span class="flash-sale">{{number_format($sp->unit_price)}} Đồng</span>
+                                            @else
+                                            <span class="flash-del">{{number_format($sp->unit_price)}} Đồng</span>
+                                            <span class="flash-sale">{{number_format($sp->promotion_price)}} Đồng</span>
+                                            @endif
+                                        </span>
                                     </p>
                                 </div>
                                 <div class="single-item-caption">
                                     <a class="add-to-cart pull-left" href="product.html"><i class="fa fa-shopping-cart"></i></a>
-                                    <a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
+                                    <a class="beta-btn primary" href="chitiet_sanpham/{{$sp->id}}">Details <i class="fa fa-chevron-right"></i></a>
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        @endforeach
+                        <!-- <div class="col-sm-4">
                             <div class="single-item">
                                 <div class="single-item-header">
                                     <a href="product.html"><img src="./source/assets/dest/images/products/5.jpg" alt=""></a>
                                 </div>
                                 <div class="single-item-body">
-                                    <p class="single-item-title">Sample Woman Top</p>
+                                    <p class="single-item-title"></p>
                                     <p class="single-item-price">
                                         <span>$34.55</span>
                                     </p>
@@ -149,7 +194,7 @@
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div> <!-- .beta-products-list -->
             </div>
