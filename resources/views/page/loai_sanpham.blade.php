@@ -21,8 +21,10 @@
             <div class="row">
                 <div class="col-sm-3">
                     <ul class="aside-menu">
-                        <li><a href="#">Typography</a></li>
-                        <li><a href="#">Buttons</a></li>
+                        @foreach($type_product as $l)
+                        <li><a href="/loai_sanpham/{{$l->id}}">{{$l->name}}</a></li>
+                        @endforeach
+                        <!-- <li><a href="#">Buttons</a></li>
                         <li><a href="#">Dividers</a></li>
                         <li><a href="#">Columns</a></li>
                         <li><a href="#">Icon box</a></li>
@@ -43,19 +45,48 @@
                         <li><a href="#">Content box</a></li>
                         <li><a href="#">Computer sliders</a></li>
                         <li><a href="#">Pricing &amp; Data tables</a></li>
-                        <li><a href="#">Process Builders</a></li>
+                        <li><a href="#">Process Builders</a></li> -->
                     </ul>
                 </div>
                 <div class="col-sm-9">
                     <div class="beta-products-list">
-                        <h4>New Products</h4>
+                        @foreach($type_product as $loai)
+                        @if($sp_theoloai[0]->id_type==$loai->id)
+                        <h4 style="text-align:center; font-weight: bold;">{{$loai->name}}</h4>
+                        @endif
+                        @endforeach
                         <div class="beta-products-details">
-                            <p class="pull-left">438 styles found</p>
+                            <p class="pull-left">{{count($sp_theoloai)}} styles found</p>
                             <div class="clearfix"></div>
                         </div>
 
                         <div class="row">
+                            @foreach($sp_theoloai as $sp)
                             <div class="col-sm-4">
+                                <div class="single-item">
+                                    <div class="single-item-header">
+                                        <a href="product.html"><img src="/source/image/product/{{$sp->image}}" alt=""></a>
+                                    </div>
+                                    <div class="single-item-body">
+                                        <p class="single-item-title">{{$sp->name}}</p>
+                                        <p class="single-item-price">
+                                            @if($sp->promotion_price==0)
+                                            <span class="flash-sale">{{number_format($sp-> unit_price)}} đồng</span>
+                                            @else
+                                            <span class="flash-del">{{number_format($sp-> unit_price)}} đồng</span>
+                                            <span class="flash-sale">{{number_format($sp-> promotion_price)}} đồng</span>
+                                            @endif
+                                        </p>
+                                    </div>
+                                    <div class="single-item-caption">
+                                        <a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
+                                        <a class="beta-btn primary" href="/chitiet_sanpham/{{$sp->id}}">Details <i class="fa fa-chevron-right"></i></a>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                            <!-- <div class="col-sm-4">
                                 <div class="single-item">
                                     <div class="single-item-header">
                                         <a href="product.html"><img src="./source/assets/dest/images/products/1.jpg" alt=""></a>
@@ -90,38 +121,50 @@
                                         <div class="clearfix"></div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="single-item">
-                                    <div class="single-item-header">
-                                        <a href="product.html"><img src="./source/assets/dest/images/products/1.jpg" alt=""></a>
-                                    </div>
-                                    <div class="single-item-body">
-                                        <p class="single-item-title">Sample Woman Top</p>
-                                        <p class="single-item-price">
-                                            <span>$34.55</span>
-                                        </p>
-                                    </div>
-                                    <div class="single-item-caption">
-                                        <a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-                                        <a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div> <!-- .beta-products-list -->
 
                     <div class="space50">&nbsp;</div>
 
                     <div class="beta-products-list">
-                        <h4>Top Products</h4>
+                        <h4>Others Products</h4>
                         <div class="beta-products-details">
-                            <p class="pull-left">438 styles found</p>
+                            <p class="pull-left">{{count($sp_khac)}} styles found</p>
                             <div class="clearfix"></div>
                         </div>
                         <div class="row">
+                        @foreach($sp_khac as $khac)
                             <div class="col-sm-4">
+                                <div class="single-item">
+                                    <div class="single-item-header">
+                                        <a href="product.html"><img src="/source/image/product/{{$khac->image}}" alt=""></a>
+                                    </div>
+                                    @if($khac->promotion_price==!0)
+                                    <div class="ribbon-wrapper">
+                                        <div class="ribbon sale">Sale</div>
+                                    </div>
+                                    @endif
+                                    <div class="single-item-body">
+                                        <p class="single-item-title">{{$khac->name}}</p>
+                                        <p class="single-item-price">
+                                        @if($khac->promotion_price==0)
+                                            <span class="flash-sale">{{number_format($khac-> unit_price)}} đồng</span>
+                                            @else
+                                            <span class="flash-del">{{number_format($khac-> unit_price)}} đồng</span>
+                                            <span class="flash-sale">{{number_format($khac-> promotion_price)}} đồng</span>
+                                            @endif
+                                        </p>
+                                    </div>
+                                    <div class="single-item-caption">
+                                        <a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
+                                        <a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                            <!-- <div class="col-sm-4">
                                 <div class="single-item">
                                     <div class="single-item-header">
                                         <a href="product.html"><img src="./source/assets/dest/images/products/1.jpg" alt=""></a>
@@ -156,25 +199,7 @@
                                         <div class="clearfix"></div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="single-item">
-                                    <div class="single-item-header">
-                                        <a href="product.html"><img src="./source/assets/dest/images/products/1.jpg" alt=""></a>
-                                    </div>
-                                    <div class="single-item-body">
-                                        <p class="single-item-title">Sample Woman Top</p>
-                                        <p class="single-item-price">
-                                            <span>$34.55</span>
-                                        </p>
-                                    </div>
-                                    <div class="single-item-caption">
-                                        <a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-                                        <a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="space40">&nbsp;</div>
 

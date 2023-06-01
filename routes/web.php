@@ -39,7 +39,7 @@ Route::get('/', function () {
 Route::get('/create', [App\Http\Controllers\RoomController::class,'create']);
 Route::post('/store', [App\Http\Controllers\RoomController::class,'store']);
 Route::get('master',[App\Http\Controllers\PageController::class, 'getIndex']);
-Route::get('loai_sanpham',[App\Http\Controllers\PageController::class, 'getLoaiSp']);
+Route::get('loai_sanpham/{id}',[App\Http\Controllers\PageController::class, 'getLoaiSp']);
 Route::get('chitiet_sanpham/{id}',[App\Http\Controllers\PageController:: class,'getChitiet']);
 Route::get('lienhe',[App\Http\Controllers\PageController:: class,'getLienhe']);
 Route::get('about_sanpham',[App\Http\Controllers\PageController:: class,'getAboutus']);

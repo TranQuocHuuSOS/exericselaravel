@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Slide;
 use App\Models\Products;
 use App\Models\Comments;
+use App\Models\Type_products;
 use Illuminate\Http\Request;			
 			
 class PageController extends Controller			
@@ -14,8 +15,11 @@ class PageController extends Controller
         $sanpham_khuyenmai=Products::where('promotion_price','<>',0)->get();
         return view('page.trangchu', compact('slide', 'new_product','sanpham_khuyenmai'));	
     }		
-    public function getLoaiSp(){
-        return view('page.loai_sanpham');
+    public function getLoaiSp($type){
+        $type_product=Type_products::all();
+        $sp_theoloai= Products::where('id_type', $type)->get();
+        $sp_khac=Products::where('id_type','<>', $type)->paginate(3);
+        return view('page.loai_sanpham', compact('sp_theoloai','type_product','sp_khac'));
     }	
     public function getChitiet( Request $request){
         $sanpham= Products:: where ('id', $request-> id)->first();
