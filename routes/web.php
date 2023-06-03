@@ -56,13 +56,22 @@ Route::get('/rectangle',[App\Http\Controllers\PageController:: class,'getAboutus
 
 Route::get('/',[App\Http\Controllers\CreateTableController:: class,'table']);
 
+Route::get('/admin', [App\Http\Controllers\PageController::class, 'getIndexAdmin']);												
+
+Route::get ('/formAdd',[App\Http\Controllers\PageController::class, 'getAdminAdd'])->name('add-product');
+Route::post ('/formAdd',[App\Http\Controllers\PageController::class, 'postAdminAdd']);
+
+Route::get ('/formEdit/{id}',[App\Http\Controllers\PageController::class, 'getAdminEdit']);
+Route::post ('/formEdit',[App\Http\Controllers\PageController::class, 'postAdminEdit']);
+
+Route::post ('/admin-delete/{id}',[App\Http\Controllers\PageController::class, 'postAdminDelete']);
 
 
+// Route::get ('/admin-export',[App\Http\Controllers\PageController::class, 'exportAdminProduct'])->('export');
 
-
-
-
-
+// Route::get('/return-vnpay', function(){
+//     return view('vnpay.return-vnpay');
+// })
 
 
 

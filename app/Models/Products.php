@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Products extends Model
 {
     use HasFactory;
-    protected $table= "products";
+    protected $table = "products";
     public function type_products(){
         return $this->belongTo('App/Type_products');
     }
